@@ -52,12 +52,20 @@ generateInitialTable_dynamically();
 	
   function generateInitialTable_dynamically() {
 
-	  // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table
-	  
+  	// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table
   	const tbl = document.createElement("table");
   	const tblBody = document.createElement("tbody");
 
-    let array = [['OPENAI_API_KEY', 'Problem/initial_response/response (evolution of the problem)', 'Previous action', 'Action (3 GPT recommendations of actions to DO to obtain goal)', 'Action selected', 'Desired goal for the problem', 'Actions to NOT DO, that could destroy what you are tring to accomplish', 'Absolute error asking GPT directly: closeness of response to desired goal (percentage)', 'Incremental points gainned per action with respect to accomplishing the desired goal  (most effective=3, effective=2, least effective=1)'], ['<p id="cell0" type="text" value="" placeholder="Cell 0" rows="10" cols="100" style="display:block; text-align: left; width: 150px;">', '<p id="cell1_input" type="text" value="" placeholder="Cell 1" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell1_output" style="display:none; text-align: left;"></p>', '<p id="cell2_input" type="text" value="" placeholder="Cell 2" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell2_output" style="display:none; text-align: left;"></p>', '<p id="cell3" style="display:block; text-align: left;"></p>', '<p id="cell4_output" style="display:block; text-align: left; color:rgb(255, 0, 10);">To do: Select one of the recommended actions by GPT, and insert here</p>', '<p id="cell5_input" type="text" value="" placeholder="Cell 5" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell5_output" style="display:none; text-align: left;"></p>', '<p id="cell6" style="display:block; text-align: left;"></p>', '<p id="cell7" style="display:block; text-align: left;"></p>', '<p id="cell8" style="display:block; text-align: left;"></p>']]
+    let array = [['OPENAI_API_KEY', 'Problem/initial_response/response (evolution of the problem)', 'Previous action', 'Action (3 GPT recommendations of actions to DO to obtain goal)', 'Action selected', 'Desired goal for the problem', 'Actions to NOT DO, that could destroy what you are tring to accomplish', 'Absolute error asking GPT directly: closeness of response to desired goal (percentage)', 'Incremental points gainned per action with respect to accomplishing the desired goal  (most effective=3, effective=2, least effective=1)'], [
+	    '<p id="cell0_input" type="text" value="" placeholder="Cell 0" rows="10" cols="100" style="display:block; text-align: left; width: 150px;">', 
+	    '<p id="cell1_input" type="text" value="" placeholder="Cell 1" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell1_output" style="display:none; text-align: left;"></p>', 
+	    '<p id="cell2_input" type="text" value="" placeholder="Cell 2" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell2_output" style="display:none; text-align: left;"></p>', 
+	    '<p id="cell3_output" style="display:none; text-align: left;"></p>', 
+	    'To do: Select one of the recommended actions by GPT, and insert here', 
+	    '<p id="cell5_input" type="text" value="" placeholder="Cell 5" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell5_output" style="display:none; text-align: left;"></p>', 
+	    '<p id="cell6_output" style="display:none; text-align: left;"></p>', 
+	    '<p id="cell7_output" style="display:none; text-align: left;"></p>', 
+	    '<p id="cell8_output" style="display:none; text-align: left;"></p>']]
     
   	// Create row cells dynamically
   	for (let i=0; i < array.length; i++){
@@ -65,7 +73,7 @@ generateInitialTable_dynamically();
   		// Create a table row
   		const row = document.createElement("tr");
 
-      // Create table columns
+  		// Create table columns
   		for (let j=0; j < array[0].length; j++){
   			const cell = document.createElement("td");
 
@@ -118,7 +126,7 @@ generateInitialTable_dynamically();
   async function get_positive_actions_for_a_response_client(){
 
     // OPENAI_API_KEY
-    var OPENAI_API_KEY = document.getElementById('cell0').value;
+    var OPENAI_API_KEY = document.getElementById('cell0_input').value;
 
     // response
     var response = document.getElementById('cell1_input').value;
@@ -156,7 +164,7 @@ generateInitialTable_dynamically();
       // -------------------------------------
       const text_out = await fetch(url, options).then(res => res.json()).then(res => {
         var out = JSON.parse(JSON.stringify(res))['choices'][0]['message']['content'];
-        document.getElementById('cell3').innerHTML = out;
+        document.getElementById('cell3_output').innerHTML = out;
         document.getElementById("cell1_input").style.display = "none";
         document.getElementById("cell1_output").style.display = "block";
         document.getElementById('cell1_output').innerHTML = response;
@@ -183,7 +191,7 @@ generateInitialTable_dynamically();
   async function get_negative_actions_for_a_response_client(){
 
     // OPENAI_API_KEY
-    var OPENAI_API_KEY = document.getElementById('cell0').value;
+    var OPENAI_API_KEY = document.getElementById('cell0_input').value;
 
     // response
     var response = document.getElementById('cell1_input').value;
@@ -213,7 +221,7 @@ generateInitialTable_dynamically();
       // -------------------------------------
       const text_out = await fetch(url, options).then(res => res.json()).then(res => {
           var out = JSON.parse(JSON.stringify(res))['choices'][0]['message']['content']; 
-          document.getElementById('cell6').innerHTML = out;
+          document.getElementById('cell6_output').innerHTML = out;
         return JSON.stringify(res)})
     } 
     catch (error) 
@@ -234,7 +242,7 @@ generateInitialTable_dynamically();
     // Call the API
     // -------------------------------------
     // OPENAI_API_KEY
-    var OPENAI_API_KEY = document.getElementById('cell0').value;
+    var OPENAI_API_KEY = document.getElementById('cell0_input').value;
 
     // response
     var response = document.getElementById('cell1_input').value;
@@ -268,7 +276,7 @@ generateInitialTable_dynamically();
       // -------------------------------------
       const text_out = await fetch(url, options).then(res => res.json()).then(res => {
         var out = JSON.parse(JSON.stringify(res))['choices'][0]['message']['content']; 
-        document.getElementById('cell7').innerHTML = out;
+        document.getElementById('cell7_output').innerHTML = out;
         return JSON.stringify(res)})
     } 
     catch (error) 
@@ -289,7 +297,7 @@ generateInitialTable_dynamically();
     // Call the API
     // -------------------------------------
     // OPENAI_API_KEY
-    var OPENAI_API_KEY = document.getElementById('cell0').value;
+    var OPENAI_API_KEY = document.getElementById('cell0_input').value;
 
     // response
     var response = document.getElementById('cell1_input').value;
@@ -328,7 +336,7 @@ generateInitialTable_dynamically();
       // -------------------------------------
       const text_out = await fetch(url, options).then(res => res.json()).then(res => {
         var out = JSON.parse(JSON.stringify(res))['choices'][0]['message']['content']; 
-        document.getElementById('cell8').innerHTML = out;
+        document.getElementById('cell8_output').innerHTML = out;
         return JSON.stringify(res)})
     } 
     catch (error) 
