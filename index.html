@@ -81,11 +81,8 @@ generateInitialTable_dynamically();
 
   			if (row == 0) {
 			  // For the first row, the [object type name] is reused with const
-  			  // const cellText0 = document.createTextNode(`${array[row][col]}`);
-  			  // cell.appendChild(cellText0);
-			  // OR
-			  const objectType_per_col = document.createTextNode(`${array[row][col]}`);
-			  cell.appendChild(objectType_per_col); // appendChild has be directly after object for async display
+			  const objectType_text = document.createTextNode(`${array[row][col]}`);
+			  cell.appendChild(objectType_text); // appendChild has be directly after object for async display
   			} else {
 				switch (col) {
     					case 0:
@@ -101,10 +98,10 @@ generateInitialTable_dynamically();
 						objectType_input.setAttribute("placeholder", "Cell 1");
 						cell.appendChild(objectType_input);
 
-						const objectType_output = document.createElement('p');
-						objectType_output.setAttribute("id", "cell1_output");
-						objectType_output.setAttribute("style", "display:none; text-align:left;");
-						cell.appendChild(objectType_output);
+						const objectType_p = document.createElement('p');
+						objectType_p.setAttribute("id", "cell1_output");
+						objectType_p.setAttribute("style", "display:none; text-align:left;");
+						cell.appendChild(objectType_p);
 						
 					case 2:
 						objectType_input = document.createElement('input');
@@ -113,21 +110,18 @@ generateInitialTable_dynamically();
 						objectType_input.setAttribute("placeholder", "Cell 2");
 						cell.appendChild(objectType_input);
 
-						objectType_output = document.createElement('p');
-						objectType_output.setAttribute("id", "cell2_output");
-						objectType_output.setAttribute("style", "display:none; text-align:left;");
-						cell.appendChild(objectType_output);
+						objectType_p = document.createElement('p');
+						objectType_p.setAttribute("id", "cell2_output");
+						objectType_p.setAttribute("style", "display:none; text-align:left;");
+						cell.appendChild(objectType_p);
 					case 3:
-						objectType_output = document.createElement('p');
-						objectType_output.setAttribute("id", "cell3_output");
-						objectType_output.setAttribute("style", "display:none; text-align:left;");
-						cell.appendChild(objectType_output);
+						objectType_p = document.createElement('p');
+						objectType_p.setAttribute("id", "cell3_output");
+						objectType_p.setAttribute("style", "display:none; text-align:left;");
+						cell.appendChild(objectType_p);
 					case 4:
-						// let col4 = document.createTextNode(`${array[row][col]}`);
-						// cell.appendChild(col4);
-						// OR
-						objectType_per_col = document.createTextNode(`${array[row][col]}`);
-						cell.appendChild(objectType_per_col);
+						objectType_text = document.createTextNode(`${array[row][col]}`);
+						cell.appendChild(objectType_text);
 					case 5:
 						objectType_input = document.createElement('input');
 						objectType_input.setAttribute("id", "cell5_input");
@@ -135,40 +129,25 @@ generateInitialTable_dynamically();
 						objectType_input.setAttribute("placeholder", "Cell 5");
 						cell.appendChild(objectType_input);
 
-						objectType_output = document.createElement('p');
-						objectType_output.setAttribute("id", "cell5_output");
-						objectType_output.setAttribute("style", "display:none; text-align:left;");
-						cell.appendChild(objectType_output);
+						objectType_p = document.createElement('p');
+						objectType_p.setAttribute("id", "cell5_output");
+						objectType_p.setAttribute("style", "display:none; text-align:left;");
+						cell.appendChild(objectType_p);
 					case 6:
-						// let col6 = document.createElement('p');
-						// col6.setAttribute("id", "cell6_output");
-						// col6.setAttribute("style", "display:block; text-align:left;");
-						// cell.appendChild(col6);
-						// OR
-						objectType_per_col = document.createElement('p');
-						objectType_per_col.setAttribute("id", "cell6_output");
-						objectType_per_col.setAttribute("style", "display:block; text-align:left;");
-						cell.appendChild(objectType_per_col);
+						objectType_p = document.createElement('p');
+						objectType_p.setAttribute("id", "cell6_output");
+						objectType_p.setAttribute("style", "display:block; text-align:left;");
+						cell.appendChild(objectType_p);
 					case 7:
-						// let col7 = document.createElement('p');
-						// col7.setAttribute("id", "cell7_output");
-						// col7.setAttribute("style", "display:block; text-align:left;");
-						// cell.appendChild(col7);
-						// OR
-						objectType_per_col = document.createElement('p');
-						objectType_per_col.setAttribute("id", "cell7_output");
-						objectType_per_col.setAttribute("style", "display:block; text-align:left;");
-						cell.appendChild(objectType_per_col);
+						objectType_p = document.createElement('p');
+						objectType_p.setAttribute("id", "cell7_output");
+						objectType_p.setAttribute("style", "display:block; text-align:left;");
+						cell.appendChild(objectType_p);
 					case 8:
-						// let col8 = document.createElement('p');
-						// col8.setAttribute("id", "cell8_output");
-						// col8.setAttribute("style", "display:block; text-align:left;");
-						// cell.appendChild(col8);
-						// OR
-						objectType_per_col = document.createElement('p');
-						objectType_per_col.setAttribute("id", "cell8_output");
-						objectType_per_col.setAttribute("style", "display:block; text-align:left;");
-						cell.appendChild(objectType_per_col);
+						objectType_p = document.createElement('p');
+						objectType_p.setAttribute("id", "cell8_output");
+						objectType_p.setAttribute("style", "display:block; text-align:left;");
+						cell.appendChild(objectType_p);
 				}
   			} // end of 
 			
