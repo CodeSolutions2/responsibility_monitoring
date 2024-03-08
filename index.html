@@ -79,8 +79,10 @@ generateInitialTable_dynamically();
 
   			if (row == 0) {
 			  // For the first row, the [object type name] is reused with const
-  			  const cellText0 = document.createTextNode(`${array[row][col]}`);
-  			  cell.appendChild(cellText0);
+  			  // const cellText0 = document.createTextNode(`${array[row][col]}`);
+  			  // cell.appendChild(cellText0);
+			  // OR
+			  const objectType_per_col = document.createTextNode(`${array[row][col]}`);
   			} else {
 				switch (col) {
     					case 0:
@@ -88,7 +90,7 @@ generateInitialTable_dynamically();
 						// col0.innerHTML = `${array[row][col]}`;
 						// cell.appendChild(col0);
 						// OR
-						const objectType_per_col = document.createElement('input');
+						objectType_per_col = document.createElement('input');
 						objectType_per_col.innerHTML = `${array[row][col]}`;
 					case 1:
 						// let col1 = document.createElement('input');
