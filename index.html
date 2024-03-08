@@ -77,14 +77,14 @@ generateInitialTable_dynamically();
   		for (let j=0; j < array[0].length; j++){
   			const cell = document.createElement("td");
 
-        if (i == 0) {
+       //  if (i == 0) {
   			  const cellText = document.createTextNode(`${array[i][j]}`);
   			  cell.appendChild(cellText);
-        } else {
-          var input = document.createElement('input');
-          input.innerHTML = `${array[i][j]}`;
-          cell.appendChild(input);
-        }
+     //    } else {
+     //      var input = document.createElement('input');
+     //      input.innerHTML = `${array[i][j]}`;
+      //     cell.appendChild(input);
+    //     }
   			row.appendChild(cell);
   		}
   
