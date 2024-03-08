@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    
+    <h1 style='text-align: center; margin-bottom: -35px;'>Responsiblity monitoring with Prompt Engineering</h1>
+    <br><br>
+    <p style='text-align: center; margin-bottom: -35px;'>Congratulations on deciding to actively take responsibilty for your problems and lead a more fullfilling life path! 🎉 Click the button below to fill-in a row in your Google Sheet with advice from GPT, when the model is finished click "[2] Close the popups" to return to your Google Sheet.</p>
+
+    <br><br>
+
+    <p style='text-align: center; margin-bottom: -35px;'>For more webapp exercises about how to be a responsible participant in your life and acheive career success, please visit the webapp book <a href="https://j622amilah.github.io/userservicesite/Observations_of_a_Data_Scientist.html">Data Science Observations in a Chaotic World</a>.</p>
+    
+
+    <br><br>
+
+    <div id="example"></div>
+
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table --> 
+    <div align="center">
+      
+    <table style='text-align: center; width: 600px;'>
+      <tr>
+        <td>OPENAI_API_KEY</td>
+        <td>Problem/initial_response/response (evolution of the problem)</td>
+        <td>Previous action</td>
+        <td>Action (3 GPT recommendations of actions to DO to obtain goal)</td>
+        <td>Action selected</td>
+        <td>Desired goal for the problem</td>
+        <td>Actions to NOT DO, that could destroy what you are tring to accomplish</td>
+        <td>Absolute error asking GPT directly: closeness of response to desired goal (percentage)</td>
+        <td>Incremental points gainned per action with respect to accomplishing the desired goal  (most effective=3, effective=2, least effective=1)</td>
+      </tr>
+
+      <tr>
+        <!-- OPENAI_API_KEY -->
+        <td><input id="cell0" type="text" value="" placeholder="Cell 0" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"></td>
+
+        <!-- Problem/initial_response/response (evolution of the problem): need to type in, so need input/output -->
+        <td><input id="cell1_input" type="text" value="" placeholder="Cell 1" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell1_output" style="display:none; text-align: left;"></p></td>
+
+        <!-- Previous action: need to type in, so need input/output to turn input into text -->
+        <td><input id="cell2_input" type="text" value="" placeholder="Cell 2" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell2_output" style="display:none; text-align: left;"></p></td>
+
+        <!-- Action (3 GPT recommendations of actions to DO to obtain goal): model returns -->
+        <td><p id="cell3" style="display:block; text-align: left;"></p></td>
+
+        <!-- Action selected: text  -->
+        <td><p id="cell4_output" style="display:block; text-align: left; color:rgb(255, 0, 10);">To do: Select one of the recommended actions by GPT, and insert here</p></td>
+
+        <!-- Desired goal for the problem: need to type in, so need input/output -->
+        <td><input id="cell5_input" type="text" value="" placeholder="Cell 5" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell5_output" style="display:none; text-align: left;"></p></td>
+
+        <!-- Actions to NOT DO, that could destroy what you are tring to accomplish: model returns -->
+        <td><p id="cell6" style="display:block; text-align: left;"></p></td>
+
+        <!-- Absolute error asking GPT directly: model returns -->
+        <td><p id="cell7" style="display:block; text-align: left;"></p></td>
+
+        <!-- Incremental points gainned per action with respect to accomplishing the desired goal: model returns -->
+        <td><p id="cell8" style="display:block; text-align: left;"></p></td>
+      </tr>
+    </table>
+    </div>
+
+    <br><br>
+
+    <div style="width:100%;height:100%;position:absolute;vertical-align:middle;text-align:center;">
+      <button id="fill_a_row" onclick="fill_a_row()">Run a spreadsheet selection</button>
+    <div>
+
+    <br><br>
+
+    <button id="download_data_button" onclick="download_data()" style="display:none">Download table</button>
+
+    <br>
+      
+    <p id="next_steps" style='text-align: center; margin-bottom: -35px; display:none;'>After obtaining results for your selection, download the spreadsheet for long-term monitoring of your actions-responses/problems. Come back daily, or as often as you need, to obtain new actions for your evolving problems, until you reach your desired goal! Good luck transforming your problems into success! 🎉</p>
+
+    <br><br>
+
+    <p id="error_message" style='text-align: center; margin-bottom: -35px; display:none;'>An error occured retreiving results from the OpenAI GPT model. Please close the popups and try running the app again.</p>
+
+<!-- --------------------------------------------------- -->
+
+<!-- CSS -->
+<style>
+  table {border-collapse: collapse;}
+  td,
+  th {border: 1px solid black;padding: 10px 20px;}
+</style>
+
+<!-- --------------------------------------------------- -->
+
+<script>
+  
+  function generateInitialTable_dynamically() {
+  
+  	const tbl = document.createElement("table");
+  	const tblBody = document.createElement("tbody");
+
+    let array = [['OPENAI_API_KEY', 'Problem/initial_response/response (evolution of the problem)', 'Previous action', 'Action (3 GPT recommendations of actions to DO to obtain goal)', 'Action selected', 'Desired goal for the problem', 'Actions to NOT DO, that could destroy what you are tring to accomplish', 'Absolute error asking GPT directly: closeness of response to desired goal (percentage)', 'Incremental points gainned per action with respect to accomplishing the desired goal  (most effective=3, effective=2, least effective=1)'], ['<input id="cell0" type="text" value="" placeholder="Cell 0" rows="10" cols="100" style="display:block; text-align: left; width: 150px;">', '<input id="cell1_input" type="text" value="" placeholder="Cell 1" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell1_output" style="display:none; text-align: left;"></p>', '<input id="cell2_input" type="text" value="" placeholder="Cell 2" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell2_output" style="display:none; text-align: left;"></p>', '<p id="cell3" style="display:block; text-align: left;"></p>', '<p id="cell4_output" style="display:block; text-align: left; color:rgb(255, 0, 10);">To do: Select one of the recommended actions by GPT, and insert here</p>', '<input id="cell5_input" type="text" value="" placeholder="Cell 5" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell5_output" style="display:none; text-align: left;"></p>', '<p id="cell6" style="display:block; text-align: left;"></p>', '<p id="cell7" style="display:block; text-align: left;"></p>', '<p id="cell8" style="display:block; text-align: left;"></p>']]
+    
+  	// Create row cells dynamically
+  	for (let i=0; i < array.length; i++){
+      
+  		// Create a table row
+  		const row = document.createElement("tr");
+
+      // Create table columns
+  		for (let j=0; j < array[0].length; j++){
+  			const cell = document.createElement("td");
+
+        if (i == 0) {
+  			  const cellText = document.createTextNode(`${array[i][j]}`);
+  			  cell.appendChild(cellText);
+        } else {
+          var input = document.createElement('input');
+          input.innerHTML = `${array[i][j]}`;
+          cell.appendChild(input);
+        }
+  			row.appendChild(cell);
+  		}
+  
+  		// add a row to the end of the table
+  		tblBody.appendChild(row);
+  	}
+  	tbl.appendChild(tblBody);
+  
+  	document.body.appendChild(tbl);
+  }  
+
+  
+  // -------------------------------------------------
+
+  
+  // function generateNewRow_dynamically() {
+  
+  // } 
+
+  
+  // -------------------------------------------------
+
+  
+  async function fill_a_row() {
+    
+    // Client-side output
+    await get_positive_actions_for_a_response_client()
+      .then(async function() { await get_negative_actions_for_a_response_client(); })
+      .then(async function() { await get_absoluteError_client(); })
+      .then(async function() { await get_incrementalError_client(); })
+      .then(async function() { document.getElementById("next_steps").style.display = "block"; document.getElementById("fill_a_row").style.display = "none"; document.getElementById("download_data_button").style.display = "block"; })
+    
+  }
+
+  
+  // -------------------------------------------------
+
+  
+  async function get_positive_actions_for_a_response_client(){
+
+    // OPENAI_API_KEY
+    var OPENAI_API_KEY = document.getElementById('cell0').value;
+
+    // response
+    var response = document.getElementById('cell1_input').value;
+
+    // previous_action
+    var previous_action = document.getElementById('cell2_input').value;
+
+    // desired_goal
+    var desired_goal = document.getElementById('cell5_input').value;
+
+    // ------------------------------------------
+
+    // var prompt = `Give three actions that one can perform in the next day that will improve the problem: ${response}. Put the actions in an itemized list, from most effective to least effective.`;
+
+    var prompt = "Give three positive actions that one can perform in the next day that will improve the problem: "+response+". Put the actions in an itemized list, from most effective to least effective. Use the least number of words.";
+
+    var temperature = 0;
+    var model_name = 'gpt-3.5-turbo';
+
+    // ------------------------------------------
+
+    var system_content = "You are a helpful assistant";
+    var assistant_content = "Respond concisely";
+    var messages = [{"role": "system", "content": system_content}, {"role": "user", "content": prompt}, {"role": "assistant", "content": assistant_content}];
+    var data = {"model": model_name, 'messages': messages, 'temperature': temperature};
+    var url = 'https://api.openai.com/v1/chat/completions';
+    var headers = {"Content-Type": "application/json", "Authorization": 'Bearer ' + OPENAI_API_KEY};
+    var options = {method : 'post', headers: headers, body : JSON.stringify(data)};
+
+    // ------------------------------------------
+
+    try {
+      // -------------------------------------
+      // Put the values from the API to the spreadsheet
+      // -------------------------------------
+      const text_out = await fetch(url, options).then(res => res.json()).then(res => {
+        var out = JSON.parse(JSON.stringify(res))['choices'][0]['message']['content'];
+        document.getElementById('cell3').innerHTML = out;
+        document.getElementById("cell1_input").style.display = "none";
+        document.getElementById("cell1_output").style.display = "block";
+        document.getElementById('cell1_output').innerHTML = response;
+        document.getElementById("cell2_input").style.display = "none";
+        document.getElementById("cell2_output").style.display = "block";
+        document.getElementById('cell2_output').innerHTML = previous_action;
+        document.getElementById("cell5_input").style.display = "none";
+        document.getElementById("cell5_output").style.display = "block";
+        document.getElementById('cell5_output').innerHTML = desired_goal;
+      return JSON.stringify(res)})
+    } 
+    catch (error) 
+    {
+      document.getElementById("error_message").style.display = "block";
+    }
+
+    
+  } // end of async function get_positive_actions_for_a_response_client()
+
+
+  // -------------------------------------------------
+
+
+  async function get_negative_actions_for_a_response_client(){
+
+    // OPENAI_API_KEY
+    var OPENAI_API_KEY = document.getElementById('cell0').value;
+
+    // response
+    var response = document.getElementById('cell1_input').value;
+
+    // ------------------------------------------
+
+    var prompt = "Give three negative actions that one should not perform in the next day that will make the problem worst: "+response+". Put the actions in an itemized list, from most uneffective to least uneffective. Use the least number of words.";
+
+    var temperature = 0;
+    var model_name = 'gpt-3.5-turbo';
+
+    // ------------------------------------------
+
+    var system_content = "You are a helpful assistant";
+    var assistant_content = "Respond concisely";
+    var messages = [{"role": "system", "content": system_content}, {"role": "user", "content": prompt}, {"role": "assistant", "content": assistant_content}];
+    var data = {"model": model_name, 'messages': messages, 'temperature': temperature};
+    var url = 'https://api.openai.com/v1/chat/completions';
+    var headers = {"Content-Type": "application/json", "Authorization": 'Bearer ' + OPENAI_API_KEY};
+    var options = {method : 'post', headers: headers, body : JSON.stringify(data)};
+
+    // ------------------------------------------
+
+    try {
+      // -------------------------------------
+      // Put the values from the API to the spreadsheet
+      // -------------------------------------
+      const text_out = await fetch(url, options).then(res => res.json()).then(res => {
+          var out = JSON.parse(JSON.stringify(res))['choices'][0]['message']['content']; 
+          document.getElementById('cell6').innerHTML = out;
+        return JSON.stringify(res)})
+    } 
+    catch (error) 
+    {
+      document.getElementById("error_message").style.display = "block";
+    }
+
+    
+  } // end of async function get_negative_actions_for_a_response_client()
+
+
+  // -------------------------------------------------
+  
+
+  async function get_absoluteError_client(){
+
+    // -------------------------------------
+    // Call the API
+    // -------------------------------------
+    // OPENAI_API_KEY
+    var OPENAI_API_KEY = document.getElementById('cell0').value;
+
+    // response
+    var response = document.getElementById('cell1_input').value;
+
+    // desired_goal
+    var desired_goal = document.getElementById('cell5_input').value;
+
+    // ------------------------------------------
+    
+    // Way 0: global comparison method (absolute error)
+    var prompt_absoluteError = "Measure the closeness of the following goal:"+desired_goal+", and situation:"+response+", using a percentage. Use the least number of words, display only a percentage."
+
+    var temperature = 0;
+    var model_name = 'gpt-3.5-turbo';
+
+    // ------------------------------------------
+
+    var system_content = "You are a helpful assistant";
+    var assistant_content = "Respond concisely";
+    var messages = [{"role": "system", "content": system_content}, {"role": "user", "content": prompt_absoluteError}, {"role": "assistant", "content": assistant_content}];
+    var data = {"model": model_name, 'messages': messages, 'temperature': temperature};
+    var url = 'https://api.openai.com/v1/chat/completions';
+    var headers = {"Content-Type": "application/json", "Authorization": 'Bearer ' + OPENAI_API_KEY};
+    var options = {method : 'post', headers: headers, body : JSON.stringify(data)};
+
+    // ------------------------------------------
+
+    try {
+      // -------------------------------------
+      // Put the values from the API to the spreadsheet
+      // -------------------------------------
+      const text_out = await fetch(url, options).then(res => res.json()).then(res => {
+        var out = JSON.parse(JSON.stringify(res))['choices'][0]['message']['content']; 
+        document.getElementById('cell7').innerHTML = out;
+        return JSON.stringify(res)})
+    } 
+    catch (error) 
+    {
+      document.getElementById("error_message").style.display = "block";
+    }
+
+    
+  } // end of async function get_absoluteError_client()
+
+
+  // ********************************************************
+
+
+  async function get_incrementalError_client(){
+
+    // -------------------------------------
+    // Call the API
+    // -------------------------------------
+    // OPENAI_API_KEY
+    var OPENAI_API_KEY = document.getElementById('cell0').value;
+
+    // response
+    var response = document.getElementById('cell1_input').value;
+
+    // previous_action
+    var previous_action = document.getElementById('cell2_input').value;
+
+    // desired_goal
+    var desired_goal = document.getElementById('cell5_input').value;
+
+    // ------------------------------------------
+    
+    // Way 1: (incremental error)
+    // Then ask GPT to rank previous_action as most_effective=3, effective=2, or least_effective=1 in terms of obtaining the desired_goal
+    
+    var prompt_incrementalError = "In terms of obtaining the desired goal of "+desired_goal+", is the action:"+previous_action+", most effective, effective, or least effective? Respond with the number 3 if most effective, 2 if effective, or 1 if least effective, use the least number of words and no puncuation symbols.";
+
+    var temperature = 0;
+    var model_name = 'gpt-3.5-turbo';
+
+    // ------------------------------------------
+
+    var system_content = "You are a helpful assistant";
+    var assistant_content = "Respond concisely";
+    var messages = [{"role": "system", "content": system_content}, {"role": "user", "content": prompt_incrementalError}, {"role": "assistant", "content": assistant_content}];
+    var data = {"model": model_name, 'messages': messages, 'temperature': temperature};
+    var url = 'https://api.openai.com/v1/chat/completions';
+    var headers = {"Content-Type": "application/json", "Authorization": 'Bearer ' + OPENAI_API_KEY};
+    var options = {method : 'post', headers: headers, body : JSON.stringify(data)};
+
+    // ------------------------------------------
+
+    try {
+      // -------------------------------------
+      // Put the values from the API to the spreadsheet
+      // -------------------------------------
+      const text_out = await fetch(url, options).then(res => res.json()).then(res => {
+        var out = JSON.parse(JSON.stringify(res))['choices'][0]['message']['content']; 
+        document.getElementById('cell8').innerHTML = out;
+        return JSON.stringify(res)})
+    } 
+    catch (error) 
+    {
+      document.getElementById("error_message").style.display = "block";
+    }
+    
+  } // end of async function get_incrementalError_client()
+
+  
+// ----------------------------------------------------
+
+  
+// Put table into an array
+
+// results
+  
+// ----------------------------------------------------
+  
+
+async function download_data() {
+    
+    // ---------------------
+    // Puts array into csv format
+    const blob = new Blob([results], { type: 'text/csv;charset=utf-8;' });
+
+    // Create a url for the data object
+    const bloburl = URL.createObjectURL(blob);
+    // ---------------------
+
+    const link = document.createElement("a");
+    link.setAttribute("href", bloburl);
+
+    const filename = 'results.csv';
+    link.setAttribute("download", filename);
+	  
+    link.style.display = 'block';
+
+    // Download CSV here: blob:https://codesolutions2.github.io/2e7701d0-559c-4be8-87de-61c72fce9a96
+    // outp.innerHTML += 'Download CSV here: ' + bloburl + "<br/>";
+	
+    document.body.appendChild(link);
+
+    // Automatic download of csv
+    // link.click();  // to have the PC prompt where to save the file
+    // document.body.removeChild(link);
+  
+}
+
+  
+  // ----------------------------------------------------
+
+  
+</script>
+
+  </body>
+</html>
