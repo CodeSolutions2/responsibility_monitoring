@@ -13,20 +13,15 @@
 
     <p style='text-align: center; margin-bottom: -35px;'>For more webapp exercises about how to be a responsible participant in your life and acheive career success, please visit the webapp book <a href="https://j622amilah.github.io/userservicesite/Observations_of_a_Data_Scientist.html">Data Science Observations in a Chaotic World</a>.</p>
     
-
     <br><br>
 
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table --> 
-
-    <div style="width:100%;height:100%;position:absolute;vertical-align:middle;text-align:center;">
-      <button id="fill_a_row" onclick="fill_a_row()">Run a spreadsheet selection</button>
-    <div>
+    <div style="width:100%;height:100%;position:relative;vertical-align:middle;text-align:center;"><button id="fill_a_row" onclick="fill_a_row()">Run a spreadsheet selection</button><div>
 
     <br><br>
 
     <button id="download_data_button" onclick="download_data()" style="display:none">Download table</button>
 
-    <br>
+    <br><br>
       
     <p id="next_steps" style='text-align: center; margin-bottom: -35px; display:none;'>After obtaining results for your selection, download the spreadsheet for long-term monitoring of your actions-responses/problems. Come back daily, or as often as you need, to obtain new actions for your evolving problems, until you reach your desired goal! Good luck transforming your problems into success! 🎉</p>
 
@@ -54,11 +49,13 @@ generateInitialTable_dynamically();
 // -------------------------------------------------
 	
   function generateInitialTable_dynamically() {
-  
+
+	  // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table
+	  
   	const tbl = document.createElement("table");
   	const tblBody = document.createElement("tbody");
 
-    let array = [['OPENAI_API_KEY', 'Problem/initial_response/response (evolution of the problem)', 'Previous action', 'Action (3 GPT recommendations of actions to DO to obtain goal)', 'Action selected', 'Desired goal for the problem', 'Actions to NOT DO, that could destroy what you are tring to accomplish', 'Absolute error asking GPT directly: closeness of response to desired goal (percentage)', 'Incremental points gainned per action with respect to accomplishing the desired goal  (most effective=3, effective=2, least effective=1)'], ['<input id="cell0" type="text" value="" placeholder="Cell 0" rows="10" cols="100" style="display:block; text-align: left; width: 150px;">', '<input id="cell1_input" type="text" value="" placeholder="Cell 1" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell1_output" style="display:none; text-align: left;"></p>', '<input id="cell2_input" type="text" value="" placeholder="Cell 2" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell2_output" style="display:none; text-align: left;"></p>', '<p id="cell3" style="display:block; text-align: left;"></p>', '<p id="cell4_output" style="display:block; text-align: left; color:rgb(255, 0, 10);">To do: Select one of the recommended actions by GPT, and insert here</p>', '<input id="cell5_input" type="text" value="" placeholder="Cell 5" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell5_output" style="display:none; text-align: left;"></p>', '<p id="cell6" style="display:block; text-align: left;"></p>', '<p id="cell7" style="display:block; text-align: left;"></p>', '<p id="cell8" style="display:block; text-align: left;"></p>']]
+    let array = [['OPENAI_API_KEY', 'Problem/initial_response/response (evolution of the problem)', 'Previous action', 'Action (3 GPT recommendations of actions to DO to obtain goal)', 'Action selected', 'Desired goal for the problem', 'Actions to NOT DO, that could destroy what you are tring to accomplish', 'Absolute error asking GPT directly: closeness of response to desired goal (percentage)', 'Incremental points gainned per action with respect to accomplishing the desired goal  (most effective=3, effective=2, least effective=1)'], ['<p id="cell0" type="text" value="" placeholder="Cell 0" rows="10" cols="100" style="display:block; text-align: left; width: 150px;">', '<p id="cell1_input" type="text" value="" placeholder="Cell 1" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell1_output" style="display:none; text-align: left;"></p>', '<p id="cell2_input" type="text" value="" placeholder="Cell 2" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell2_output" style="display:none; text-align: left;"></p>', '<p id="cell3" style="display:block; text-align: left;"></p>', '<p id="cell4_output" style="display:block; text-align: left; color:rgb(255, 0, 10);">To do: Select one of the recommended actions by GPT, and insert here</p>', '<p id="cell5_input" type="text" value="" placeholder="Cell 5" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell5_output" style="display:none; text-align: left;"></p>', '<p id="cell6" style="display:block; text-align: left;"></p>', '<p id="cell7" style="display:block; text-align: left;"></p>', '<p id="cell8" style="display:block; text-align: left;"></p>']]
     
   	// Create row cells dynamically
   	for (let i=0; i < array.length; i++){
