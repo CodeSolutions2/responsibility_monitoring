@@ -89,41 +89,39 @@ generateInitialTable_dynamically();
   			} else {
 				switch (col) {
     					case 0:
-						// let col0 = document.createElement('input');
-						// col0.innerHTML = `${array[row][col]}`;
-						// cell.appendChild(col0);
-						// OR
-						objectType_per_col = document.createElement('input');
-						objectType_per_col.setAttribute("id", "cell0_input");
-						objectType_per_col.setAttribute("style", "display:block; text-align:left;");
-						objectType_per_col.setAttribute("placeholde", "Cell 0");
-						cell.appendChild(objectType_per_col);
+						const objectType_input = document.createElement('input');
+						objectType_input.setAttribute("id", "cell0_input");
+						objectType_input.setAttribute("style", "display:block; text-align:left;");
+						objectType_input.setAttribute("placeholder", "Cell 0");
+						cell.appendChild(objectType_input);
 					case 1:
-						// let col1 = document.createElement('input');
-						// col1.innerHTML = `${array[row][col]}`;
-						// cell.appendChild(col1);
-						// OR
-						objectType_per_col = document.createElement('input');
-						objectType_per_col.innerHTML = `${array[row][col]}`;
-						cell.appendChild(objectType_per_col);
+						objectType_input = document.createElement('input');
+						objectType_input.setAttribute("id", "cell1_input");
+						objectType_input.setAttribute("style", "display:block; text-align:left;");
+						objectType_input.setAttribute("placeholder", "Cell 1");
+						cell.appendChild(objectType_input);
+
+						const objectType_output = document.createElement('p');
+						objectType_output.setAttribute("id", "cell1_output");
+						objectType_output.setAttribute("style", "display:none; text-align:left;");
+						cell.appendChild(objectType_output);
+						
 					case 2:
-						// let col2 = document.createElement('input');
-						// col2.innerHTML = `${array[row][col]}`;
-						// cell.appendChild(col2);
-						// OR
-						objectType_per_col = document.createElement('input');
-						objectType_per_col.innerHTML = `${array[row][col]}`;
-						cell.appendChild(objectType_per_col);
+						objectType_input = document.createElement('input');
+						objectType_input.setAttribute("id", "cell2_input");
+						objectType_input.setAttribute("style", "display:block; text-align:left;");
+						objectType_input.setAttribute("placeholder", "Cell 2");
+						cell.appendChild(objectType_input);
+
+						objectType_output = document.createElement('p');
+						objectType_output.setAttribute("id", "cell2_output");
+						objectType_output.setAttribute("style", "display:none; text-align:left;");
+						cell.appendChild(objectType_output);
 					case 3:
-						// let col3 = document.createElement('p');
-						// col3.setAttribute("id", "cell3_output");
-						// col3.setAttribute("style", "display:block; text-align:left;");
-						// cell.appendChild(col3);
-						// OR
-						objectType_per_col = document.createElement('p');
-						objectType_per_col.setAttribute("id", "cell3_output");
-						objectType_per_col.setAttribute("style", "display:block; text-align:left;");
-						cell.appendChild(objectType_per_col);
+						objectType_output = document.createElement('p');
+						objectType_output.setAttribute("id", "cell3_output");
+						objectType_output.setAttribute("style", "display:none; text-align:left;");
+						cell.appendChild(objectType_output);
 					case 4:
 						// let col4 = document.createTextNode(`${array[row][col]}`);
 						// cell.appendChild(col4);
@@ -131,13 +129,16 @@ generateInitialTable_dynamically();
 						objectType_per_col = document.createTextNode(`${array[row][col]}`);
 						cell.appendChild(objectType_per_col);
 					case 5:
-						// let col5 = document.createElement('input');
-						// col5.innerHTML = `${array[row][col]}`;
-						// cell.appendChild(col5);
-						// OR
-						objectType_per_col = document.createElement('input');
-						objectType_per_col.innerHTML = `${array[row][col]}`;
-						cell.appendChild(objectType_per_col);
+						objectType_input = document.createElement('input');
+						objectType_input.setAttribute("id", "cell5_input");
+						objectType_input.setAttribute("style", "display:block; text-align:left;");
+						objectType_input.setAttribute("placeholder", "Cell 5");
+						cell.appendChild(objectType_input);
+
+						objectType_output = document.createElement('p');
+						objectType_output.setAttribute("id", "cell5_output");
+						objectType_output.setAttribute("style", "display:none; text-align:left;");
+						cell.appendChild(objectType_output);
 					case 6:
 						// let col6 = document.createElement('p');
 						// col6.setAttribute("id", "cell6_output");
