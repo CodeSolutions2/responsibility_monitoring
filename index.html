@@ -87,13 +87,14 @@ generateInitialTable_dynamically();
 			  // OR
 			  console.log('here');
 			  const objectType_per_col = document.createTextNode(`${array[row][col]}`);
+			  cell.appendChild(objectType_per_col);
   			} else {
 				console.log('should print for row=1');
   			} // end of 
 
 			
 			
-			cell.appendChild(objectType_per_col);
+			
   			rowElement.appendChild(cell);
 			
   		} // end of column for loop
