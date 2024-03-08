@@ -93,8 +93,8 @@ generateInitialTable_dynamically();
 						// col0.innerHTML = `${array[row][col]}`;
 						// cell.appendChild(col0);
 						// OR
-						objectType_per_col = document.createElement('input');
-						objectType_per_col.innerHTML = `${array[row][col]}`;
+						const objectType_per_col = document.createElement('input');
+						// objectType_per_col.innerHTML = `${array[row][col]}`;
 						cell.appendChild(objectType_per_col);
 					case 1:
 						// let col1 = document.createElement('input');
