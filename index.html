@@ -82,6 +82,7 @@ generateInitialTable_dynamically();
   			  // const cellText0 = document.createTextNode(`${array[row][col]}`);
   			  // cell.appendChild(cellText0);
 			  // OR
+			  console.log('here');
 			  const objectType_per_col = document.createTextNode(`${array[row][col]}`);
   			} else {
 				switch (col) {
@@ -155,13 +156,14 @@ generateInitialTable_dynamically();
 						objectType_per_col.setAttribute("id", "cell8_output");
 						objectType_per_col.setAttribute("style", "display:block; text-align:left;");
 				}
-  			}
+  			} // end of 
 
 			console.log("row: ", row);
 			console.log("col: ", col);
 			cell.appendChild(objectType_per_col);
   			rowElement.appendChild(cell);
-  		}
+			
+  		} // end of column for loop
   
   		// add a row to the end of the table
   		tblBody.appendChild(rowElement);
