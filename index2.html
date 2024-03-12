@@ -17,6 +17,51 @@ This webapp is a dynamic table that allows users to input their problems (the re
     
     <br><br>
 
+	  <table style='text-align: center; width: 600px;'>
+      <tr>
+        <td>OPENAI_API_KEY</td>
+        <td>Problem/initial_response/response (evolution of the problem)</td>
+        <td>Previous action</td>
+        <td>Action (3 GPT recommendations of actions to DO to obtain goal)</td>
+        <td>Action selected</td>
+        <td>Desired goal for the problem</td>
+        <td>Actions to NOT DO, that could destroy what you are tring to accomplish</td>
+        <td>Absolute error asking GPT directly: closeness of response to desired goal (percentage)</td>
+        <td>Incremental points gainned per action with respect to accomplishing the desired goal  (most effective=3, effective=2, least effective=1)</td>
+      </tr>
+
+      <tr>
+        <!-- OPENAI_API_KEY -->
+        <td><input id="cell0" type="text" value="" placeholder="Cell 0" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"></td>
+
+        <!-- Problem/initial_response/response (evolution of the problem): need to type in, so need input/output -->
+        <td><input id="cell1_input" type="text" value="" placeholder="Cell 1" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell1_output" style="display:none; text-align: left;"></p></td>
+
+        <!-- Previous action: need to type in, so need input/output to turn input into text -->
+        <td><input id="cell2_input" type="text" value="" placeholder="Cell 2" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell2_output" style="display:none; text-align: left;"></p></td>
+
+        <!-- Action (3 GPT recommendations of actions to DO to obtain goal): model returns -->
+        <td><p id="cell3" style="display:block; text-align: left;"></p></td>
+
+        <!-- Action selected: text  -->
+        <td><p id="cell4_output" style="display:block; text-align: left; color:rgb(255, 0, 10);">To do: Select one of the recommended actions by GPT, and insert here</p></td>
+
+        <!-- Desired goal for the problem: need to type in, so need input/output -->
+        <td><input id="cell5_input" type="text" value="" placeholder="Cell 5" rows="10" cols="100" style="display:block; text-align: left; width: 150px;"><p id="cell5_output" style="display:none; text-align: left;"></p></td>
+
+        <!-- Actions to NOT DO, that could destroy what you are tring to accomplish: model returns -->
+        <td><p id="cell6" style="display:block; text-align: left;"></p></td>
+
+        <!-- Absolute error asking GPT directly: model returns -->
+        <td><p id="cell7" style="display:block; text-align: left;"></p></td>
+
+        <!-- Incremental points gainned per action with respect to accomplishing the desired goal: model returns -->
+        <td><p id="cell8" style="display:block; text-align: left;"></p></td>
+      </tr>
+    </table>
+
+    <br><br>
+
     <div style="width:100%;height:100%;position:relative;vertical-align:middle;text-align:center;"><button id="fill_a_row" onclick="fill_a_row()">Run a spreadsheet selection</button><div>
 
     <br><br>
