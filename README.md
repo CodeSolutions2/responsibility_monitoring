@@ -4,4 +4,4 @@ Taking responsibility for one's life means to be aware of your problems and why 
 
 This webapp is a dynamic table that allows users to input their problems (the response), and receive logical actions for how to improve their problems towards a desired goal. 
 
-[In progress] 
+[In progress] https://CodeSolutions2.github.io/responsibility_monitoring/index2.html
