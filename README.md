@@ -1,7 +1,5 @@
 # responsibility_monitoring
 
-Taking responsibility for one's life means to be aware of your problems and why they occur. Using AI technologies, like LLM (OpenAI chatgpt) via prompt engineering, can be useful to monitor "action-response" behavior such that things that were once problems (the response) can be transformed into something else (a desired goal) by performing simple and small actions daily. 
+A JavaScript productivity tool, a table with REST API requests for specific cells to OpenAI chatGPT, to help users intelligently monitor problems in their lives. Taking responsibility for one's life means to be aware of your problems and why they occur. Using AI technologies, like LLM (OpenAI chatgpt) via prompt engineering, can be useful to monitor "action-response" behavior such that things that were once problems (the response) can be transformed into something else (a desired goal) by performing simple and small actions daily. 
 
-This webapp is a dynamic table that allows users to input their problems (the response), and receive logical actions for how to improve their problems towards a desired goal. 
-
-[In progress] https://CodeSolutions2.github.io/responsibility_monitoring/index2.html
+[Completed working version] https://CodeSolutions2.github.io/responsibility_monitoring/index2.html
